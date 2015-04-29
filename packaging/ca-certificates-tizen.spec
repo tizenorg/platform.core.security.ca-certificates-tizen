@@ -8,8 +8,12 @@ License:       Apache-2.0
 Source:        %{name}-%{version}.tar.gz
 Source1001:    %{name}.manifest
 BuildArch:     noarch
-%define tizen_dir /usr/share/ca-certificates/tizen
-%define wac_dir /usr/share/ca-certificates/wac
+BuildRequires: cmake
+BuildRequires: openssl
+
+%define tizen_dir       /usr/share/ca-certificates/tizen
+%define wac_dir         /usr/share/ca-certificates/wac
+%define fingerprint_dir /usr/share/ca-certificates/fingerprint
 
 %description
 Used for the installation of Tizen-specific CA certificates.
@@ -19,19 +23,23 @@ Used for the installation of Tizen-specific CA certificates.
 cp %{SOURCE1001} .
 
 %build
+%cmake . -DTIZEN_DIR=%{tizen_dir} \
+         -DWAC_DIR=%{wac_dir} \
+         -DFINGERPRINT_DIR=%{fingerprint_dir}
 
 %install
 rm -fr %{buildroot}
-mkdir -p %{buildroot}/%{tizen_dir}
-mkdir -p %{buildroot}/%{wac_dir}
-cp -arf certificates/tizen*.pem %{buildroot}/%{tizen_dir}/
-cp -arf certificates/wac*.pem %{buildroot}/%{wac_dir}/
+%make_install
+mkdir -p %{buildroot}%{tizen_dir}
+mkdir -p %{buildroot}%{wac_dir}
+mkdir -p %{buildroot}%{fingerprint_dir}
 
 %files
+%defattr(-,root,root,-)
 %manifest %{name}.manifest
 %license LICENSE
-%defattr(-,root,root,-)
 %{tizen_dir}/*
 %{wac_dir}/*
+%{fingerprint_dir}/*
 
 %changelog

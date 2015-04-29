@@ -1,0 +1,10 @@
+<CertificateSet>
+    <CertificateDomain name="tizen-developer"><!-- used to verify tizen widgets -->
+    </CertificateDomain>
+    <CertificateDomain name="tizen-public">
+    </CertificateDomain>
+    <CertificateDomain name="tizen-partner">
+    </CertificateDomain>
+    <CertificateDomain name="tizen-platform">
+    </CertificateDomain>
+</CertificateSet>
