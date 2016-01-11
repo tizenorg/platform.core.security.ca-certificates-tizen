@@ -10,10 +10,13 @@ Source1001:    %{name}.manifest
 BuildArch:     noarch
 BuildRequires: cmake
 BuildRequires: openssl
+BuildRequires: pkgconfig(libtzplatform-config)
+BuildRequires: ca-certificates-devel
+Requires: ca-certificates
 
-%define tizen_dir       /usr/share/ca-certificates/tizen
-%define wac_dir         /usr/share/ca-certificates/wac
-%define fingerprint_dir /usr/share/ca-certificates/fingerprint
+%define tizen_dir       %TZ_SYS_SHARE/ca-certificates/tizen
+%define wac_dir         %TZ_SYS_SHARE/ca-certificates/wac
+%define fingerprint_dir %TZ_SYS_SHARE/ca-certificates/fingerprint
 
 %description
 Used for the installation of Tizen-specific CA certificates.
@@ -28,11 +31,28 @@ cp %{SOURCE1001} .
          -DFINGERPRINT_DIR=%{fingerprint_dir}
 
 %install
-rm -fr %{buildroot}
 %make_install
-mkdir -p %{buildroot}%{tizen_dir}
-mkdir -p %{buildroot}%{wac_dir}
-mkdir -p %{buildroot}%{fingerprint_dir}
+mkdir -p %buildroot%tizen_dir
+mkdir -p %buildroot%wac_dir
+mkdir -p %buildroot%fingerprint_dir
+mkdir -p %buildroot%TZ_SYS_CA_CERTS
+
+for cert in `ls "%buildroot%tizen_dir"`
+do
+    subject_hash=`openssl x509 -in "%buildroot%tizen_dir/$cert" -noout -subject_hash`
+
+    idx=0
+    while true
+    do
+        if [ -f "%TZ_SYS_CA_CERTS/$subject_hash.$idx" ]; then
+            idx=`expr $idx + 1`
+        else
+            break
+        fi
+    done
+
+    ln -sf "%tizen_dir/$cert" "%buildroot%TZ_SYS_CA_CERTS/$subject_hash.$idx"
+done
 
 %files
 %defattr(-,root,root,-)
@@ -41,5 +61,6 @@ mkdir -p %{buildroot}%{fingerprint_dir}
 %{tizen_dir}/*
 %{wac_dir}/*
 %{fingerprint_dir}/*
+%TZ_SYS_CA_CERTS/*
 
 %changelog
