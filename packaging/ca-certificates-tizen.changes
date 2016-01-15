@@ -1,3 +1,5 @@
 * Thu Aug 21 2014 John L. Whiteman <john.l.whiteman@intel.com> ff879a0
 - Added Tizen certificates, license and packaging
 
+* Fri Jan 15 2016 Sangwan Kwon <sangwan.kwon@samsung.com> 315ec1c
+- Remove WAC certificates
