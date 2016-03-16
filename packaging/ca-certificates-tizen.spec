@@ -11,8 +11,9 @@ BuildArch:     noarch
 BuildRequires: cmake
 BuildRequires: openssl
 
-%define tizen_dir       /usr/share/ca-certificates/tizen
-%define fingerprint_dir /usr/share/ca-certificates/fingerprint
+%define ro_data_dir     %{?TZ_SYS_RO_SHARE:%TZ_SYS_RO_SHARE}%{!?TZ_SYS_RO_SHARE:%_datadir}
+%define tizen_dir       %{ro_data_dir}/ca-certificates/tizen
+%define fingerprint_dir %{ro_data_dir}/ca-certificates/fingerprint
 
 %description
 Used for the installation of Tizen-specific CA certificates.
