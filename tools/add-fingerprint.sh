@@ -9,7 +9,7 @@ then
 	exit 2
 fi
 
-for CATEGORY in developer public partner platform
+for CATEGORY in developer public partner platform test verify store
 do
 	if [ -d "$CERT_ROOT/$CATEGORY" ]
 	then

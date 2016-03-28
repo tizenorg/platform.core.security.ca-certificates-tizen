@@ -1,0 +1,24 @@
+TIZEN CA Certicificates directory structure in package
+: [profile] - [release mode] - [Certificate Domain]
+
+- whole installed certificates location is same as TIZEN_DIR
+- refer to macro {TIZEN_DIR} in spec file
+
+[profile]
+* mobile
+* tv
+* wearable
+
+[release mode]
+* emul
+* eng
+* usr
+
+[Certificate Domain]
+* developer
+* partner
+* platform
+* public
+* store (only usr mode)
+* test (only usr mode)
+* verify (only usr mode)

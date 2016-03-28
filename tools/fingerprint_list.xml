@@ -7,4 +7,10 @@
     </CertificateDomain>
     <CertificateDomain name="tizen-platform">
     </CertificateDomain>
+    <CertificateDomain name="tizen-test">
+    </CertificateDomain>
+    <CertificateDomain name="tizen-verify">
+    </CertificateDomain>
+    <CertificateDomain name="tizen-store">
+    </CertificateDomain>
 </CertificateSet>

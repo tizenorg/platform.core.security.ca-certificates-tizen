@@ -7,7 +7,6 @@ URL:           http://www.tizen.org
 License:       Apache-2.0
 Source:        %{name}-%{version}.tar.gz
 Source1001:    %{name}.manifest
-BuildArch:     noarch
 BuildRequires: cmake
 BuildRequires: openssl
 
@@ -23,8 +22,24 @@ Used for the installation of Tizen-specific CA certificates.
 cp %{SOURCE1001} .
 
 %build
-%cmake . -DTIZEN_DIR=%{tizen_dir} \
-         -DFINGERPRINT_DIR=%{fingerprint_dir}
+
+# define build architecture
+%ifarch %{ix86}
+echo "release emulator mode"
+%define ARCH i586
+%define REL_MODE emul
+%else
+echo "release engineering mode"
+%define ARCH arm
+%define REL_MODE eng
+%endif
+
+%cmake . -DRELMODE=%{REL_MODE} \
+         -DTIZEN_DIR=%{tizen_dir} \
+         -DFINGERPRINT_DIR=%{fingerprint_dir} \
+         -DPROFILE_TARGET=%{?profile}
+
+make %{?_smp_mflags}
 
 %install
 rm -fr %{buildroot}
@@ -38,5 +53,3 @@ mkdir -p %{buildroot}%{fingerprint_dir}
 %license LICENSE
 %{tizen_dir}/*
 %{fingerprint_dir}/*
-
-%changelog
