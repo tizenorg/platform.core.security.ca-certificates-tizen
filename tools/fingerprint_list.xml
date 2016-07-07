@@ -13,4 +13,6 @@
     </CertificateDomain>
     <CertificateDomain name="tizen-store">
     </CertificateDomain>
+    <CertificateDomain name="tizen-revoked">
+    </CertificateDomain>
 </CertificateSet>
