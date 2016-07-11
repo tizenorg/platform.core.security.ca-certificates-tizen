@@ -8,6 +8,8 @@ TIZEN CA Certicificates directory structure in package
 * mobile
 * tv
 * wearable
+* common
+* ivi
 
 [release mode]
 * emul
@@ -22,3 +24,4 @@ TIZEN CA Certicificates directory structure in package
 * store (only usr mode)
 * test (only usr mode)
 * verify (only usr mode)
+* revoked
